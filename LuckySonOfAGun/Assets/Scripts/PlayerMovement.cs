@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        //rigidbody movement for player
+        // movement for player
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         transform.Translate(movement * speed * Time.deltaTime);
     }
