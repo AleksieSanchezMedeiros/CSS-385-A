@@ -15,9 +15,9 @@ Lucky Son of a Gun drops players into a pixel wild-west world ruled by chaos and
 The player’s goal is to survive shootouts and defeat all enemies within each level by balancing luck and skill. It'll be closer to a roguelike where each successive play can be different. Success comes in rolling favorable dice outcomes, landing precise shots, and knowing when to slow time for higher accuracy. Between rounds, players can upgrade or swap dice/dice abilities and select power-ups to customize their strategy. The objective is to clear increasingly difficult stages, and surivve longer each time. Bragging rights for highest round reached is a huge component for this game.
 
 ---
-# Game Mechanics (use/refer to mock ups here)
+# Game Mechanics (see mock ups for how displayed)
 
 - **Movement**: Use WASD or arrow keys to dodge bullets and reposition your character for a better shot.
-- **Aiming & Shooting**: Use the mouse to aim and fire. Each shot rolls a real dice to determine damage, accuracy/aim, or critical effects. (see mockups)
-- **Slowing Down Time**: Right-click slows down time, giving better aim and improves dice odds for an extra boost in luck. (see mockups)
+- **Aiming & Shooting**: Use the mouse to aim and fire. Each shot rolls a real dice to determine damage, accuracy/aim, or critical effects.
+- **Slowing Down Time**: Right-click slows down time, giving better aim and improves dice odds for an extra boost in luck.
 - **Dice System**: Between rounds, the player can select or upgrade dice types. Special Dice can give abilities to the player at some expense. Higher-risk dice (D6 vs D20) deal greater damage but are less consistent.
