@@ -9,6 +9,7 @@ public class GameUI : MonoBehaviour
     //bullets
     [Header("Player Scripts")]
     [SerializeField] private PlayerShooting playerShooting;
+    [SerializeField] private PlayerMovement playerMovement;
 
     //UI Elements
     [Header("Player UI Elements")]
@@ -22,6 +23,7 @@ public class GameUI : MonoBehaviour
 
     void Start()
     {
+
         pauseMenuBg.SetActive(false);
         pauseMenuTitleText.SetActive(false);
         saveGameButton.SetActive(false);
@@ -79,8 +81,26 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    void OnReloading()
+    public void OnSaveGameButtonPressed()
     {
+        SaveAndLoad.SaveGame(playerMovement, playerShooting);
+    }
 
+    public void OnLoadGameButtonPressed()
+    {
+        SaveData loadedData = SaveAndLoad.LoadGame();
+        if (loadedData != null)
+        {
+            //set player position
+            playerMovement.transform.position = new Vector2(loadedData.playerX, loadedData.playerY);
+            //set player ammo
+            playerShooting.ammoCount = loadedData.playerAmmoCount;
+            PauseGame();
+        }
+        else
+        {
+            Debug.LogError("Failed to load game data.");
+            return;
+        }
     }
 }

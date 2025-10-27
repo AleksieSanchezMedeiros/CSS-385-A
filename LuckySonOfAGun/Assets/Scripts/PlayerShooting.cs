@@ -19,6 +19,11 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0f)
+        {
+            return; // do nothing if the game is paused
+        }
+
         //rotate to look at mouse position in 2d
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get it in 3d
 
