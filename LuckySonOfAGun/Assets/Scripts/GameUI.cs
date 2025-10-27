@@ -4,43 +4,83 @@ using System.Collections;
 
 public class GameUI : MonoBehaviour
 {
-    public TMP_Text playerShootingText;
+    //Scripts
+    //health
+    //bullets
+    [Header("Player Scripts")]
+    [SerializeField] private PlayerShooting playerShooting;
 
-    // stop animation from stacking
-    public void PlayerShooting()
+    //UI Elements
+    [Header("Player UI Elements")]
+    [SerializeField] private GameObject[] ammoUIElements = new GameObject[6]; //list of bullet images
+
+
+    [Header("Pause Menu Elements")]
+    [SerializeField] private GameObject pauseMenuBg;
+    [SerializeField] private GameObject pauseMenuTitleText;
+    [SerializeField] private GameObject saveGameButton, loadGameButton;
+
+    void Start()
     {
-        StopAllCoroutines();
-        StartCoroutine(RollAnimation());
+        pauseMenuBg.SetActive(false);
+        pauseMenuTitleText.SetActive(false);
+        saveGameButton.SetActive(false);
+        loadGameButton.SetActive(false);
     }
 
-    //coroutine for animation
-    private IEnumerator RollAnimation()
+    // Update is called once per frame
+    void Update()
     {
-        //get the result of the roll, idk why i did it with a singleton this coulda been by just passing in the variable
-        int rollResult = DiceRoll.Instance.currentRoll;
-
-        Time.timeScale = 0.025f; // Slow down time for dramatic effect
-
-        // do a goofy rolling animation for now
-        for (int i = 0; i < 2; i++)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            for (int j = 1; j <= 6; j++)
-            {
-                playerShootingText.text = j.ToString();
-                yield return new WaitForSecondsRealtime(0.1f); // Wait 0.1 seconds (ignores timeScale)
-
-                // If this is the last loop and j matches the roll, stop early
-                if (i == 1 && j == rollResult)
-                {
-                    playerShootingText.text = rollResult.ToString();
-                    Time.timeScale = 1f; // Restore time
-                    yield break;
-                }
-            }
+            PauseGame();
         }
 
-        //regular end of animation
-        playerShootingText.text = rollResult.ToString();
-        Time.timeScale = 1f;
+        UpdateAmmoUI();
+    }
+
+    void PauseGame()
+    {
+        // Toggle pause state
+        if (Time.timeScale == 1f)
+        {
+            Time.timeScale = 0f; // Pause the game
+            pauseMenuBg.SetActive(true);
+            pauseMenuTitleText.SetActive(true);
+            saveGameButton.SetActive(true);
+            loadGameButton.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1f; // Resume the game
+            pauseMenuBg.SetActive(false);
+            pauseMenuTitleText.SetActive(false);
+            saveGameButton.SetActive(false);
+            loadGameButton.SetActive(false);
+        }
+    }
+
+    //use the ammo count from player shooting to update the UI
+    //and then enable/disable the bullet images depending on their location in list
+    void UpdateAmmoUI()
+    {
+        int currentAmmo = playerShooting.ammoCount;
+
+        for (int i = 0; i < 6; i++)
+        {
+            if (i < currentAmmo)
+            {
+                ammoUIElements[i].SetActive(true);
+            }
+            else
+            {
+                ammoUIElements[i].SetActive(false);
+            }
+        }
+    }
+
+    void OnReloading()
+    {
+
     }
 }
