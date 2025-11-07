@@ -448,7 +448,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Play
+  m_text: Start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3ebb3cfe2d7be284ea70bf0a8c453600, type: 2}
   m_sharedMaterial: {fileID: 3497658068886661816, guid: 3ebb3cfe2d7be284ea70bf0a8c453600, type: 2}
@@ -856,9 +856,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Options
-
-'
+  m_text: How To Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3ebb3cfe2d7be284ea70bf0a8c453600, type: 2}
   m_sharedMaterial: {fileID: 3497658068886661816, guid: 3ebb3cfe2d7be284ea70bf0a8c453600, type: 2}
@@ -885,10 +883,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 24
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2352,7 +2350,9 @@ MonoBehaviour:
   loadButton: {fileID: 949556493}
   backButton: {fileID: 1900224309}
   targetX: 0
-  offscreenX: -2000
+  offscreenLeftX: -2000
+  offscreenRightX: 2000
+  moveSpeed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

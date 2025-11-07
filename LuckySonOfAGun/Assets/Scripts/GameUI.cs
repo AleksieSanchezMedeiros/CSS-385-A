@@ -62,6 +62,11 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void endGame()
+    {
+        Debug.Log("health is 0, ending game");
+    }
+
     //use the ammo count from player shooting to update the UI
     //and then enable/disable the bullet images depending on their location in list
     void UpdateAmmoUI()
