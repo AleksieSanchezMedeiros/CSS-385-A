@@ -11,6 +11,7 @@ public class FodderEnemy : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -29,7 +30,10 @@ public class FodderEnemy : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            playerHealth.takeDamage(1);
+            if (playerHealth != null)
+            {
+                playerHealth.takeDamage(1);
+            }
         }
     }
 }

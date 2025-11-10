@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject pauseMenuTitleText;
     [SerializeField] private GameObject saveGameButton, loadGameButton;
 
+    [Header("Power Up Elements")]
+    [SerializeField] private GameObject powerUpSquare;
+
     void Start()
     {
 
@@ -39,6 +43,13 @@ public class GameUI : MonoBehaviour
         }
 
         UpdateAmmoUI();
+    }
+
+    public void PowerUp(int roll)
+    {
+        Animator anim = powerUpSquare.GetComponent<Animator>();
+        anim.SetInteger("Roll", roll);
+        //stop on the last frame of anim
     }
 
     void PauseGame()
@@ -64,8 +75,19 @@ public class GameUI : MonoBehaviour
 
     public void endGame()
     {
-        Debug.Log("health is 0, ending game");
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
+
+    public Animator transition;
+    IEnumerator LoadLevel(int index)
+    {
+        transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(1);
+
+        SceneManager.LoadScene(index);
+    }
+
 
     //use the ammo count from player shooting to update the UI
     //and then enable/disable the bullet images depending on their location in list

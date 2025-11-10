@@ -129,13 +129,27 @@ public class TitleMenu : MonoBehaviour
 
     public void onOptionsButtonClicked()
     {
-        // Options menu logic here
-        Debug.Log("Options button clicked");
+        StartCoroutine(LoadLevel(3));
     }
 
     public void onNewGameButtonClicked()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+    }
+
+    public Animator transition;
+    IEnumerator LoadLevel(int index)
+    {
+        transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(1);
+
+        SceneManager.LoadScene(index);
+    }
+
+    public void onRestartGameButtonClicked()
+    {
+        StartCoroutine(LoadLevel(0));
     }
 
     public void onLoadGameButtonClicked()

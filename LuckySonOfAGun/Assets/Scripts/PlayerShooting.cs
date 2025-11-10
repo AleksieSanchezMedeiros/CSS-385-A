@@ -15,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
 
     public bool onReloadCooldown;
 
+    public int roll = 0;
 
     // Update is called once per frame
     void Update()
