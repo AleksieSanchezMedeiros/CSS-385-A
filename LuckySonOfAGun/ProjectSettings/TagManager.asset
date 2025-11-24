@@ -6,14 +6,16 @@ TagManager:
   tags:
   - Enemy
   - Power Up
+  - Bullet
+  - Music
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - ScreenBounds
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 

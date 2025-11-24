@@ -5,6 +5,8 @@ public class Health : MonoBehaviour
 {
     public GameUI gui;
 
+    private AudioSource _audioSource;
+
     public bool canDamage;
     public float damageCooldownDuration = 1f;
 
@@ -15,6 +17,8 @@ public class Health : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        _audioSource = GetComponent<AudioSource>();
         canDamage = true;
 
         foreach (GameObject healthImg in healthBar)
@@ -25,6 +29,8 @@ public class Health : MonoBehaviour
 
     public void takeDamage(int amountOfDamage)
     {
+        _audioSource.Play();
+
         if (!canDamage) return;
 
         for (int i = health - 1; i >= health - amountOfDamage; i--)
@@ -50,6 +56,8 @@ public class Health : MonoBehaviour
         {
             newHealth = 3;
         }
+
+        health = newHealth;
 
         for (int i = health - 1; i < newHealth - 1; i++)
         {

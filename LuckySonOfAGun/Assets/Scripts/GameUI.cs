@@ -24,9 +24,20 @@ public class GameUI : MonoBehaviour
 
     [Header("Power Up Elements")]
     [SerializeField] private GameObject powerUpSquare;
+    [Header("Score Text")]
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI scoreText2;
+    [Header("Round Manager")]
+    [SerializeField] private RoundManager rm;
+    [SerializeField] private TextMeshProUGUI roundText;
+    [SerializeField] private TextMeshProUGUI roundText2;
+
+    private AudioSource _audioSource;
 
     void Start()
     {
+
+        _audioSource = GetComponent<AudioSource>();
 
         pauseMenuBg.SetActive(false);
         pauseMenuTitleText.SetActive(false);
@@ -43,13 +54,74 @@ public class GameUI : MonoBehaviour
         }
 
         UpdateAmmoUI();
+        UpdateScoreUI();
     }
 
+    public void ShowRound(int round)
+    {
+        StartCoroutine(ShowRoundRoutine(round));
+    }
+
+    private IEnumerator ShowRoundRoutine(int round)
+    {
+        roundText.gameObject.SetActive(true);
+        roundText2.gameObject.SetActive(true);
+        roundText.text = "ROUND " + round;
+        roundText2.text = "ROUND " + round;
+
+        // fade in
+        roundText.alpha = 0f;
+        roundText2.alpha = 0f;
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 2f;
+            roundText.alpha = t;
+            roundText2.alpha = t;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1.5f); // display time
+
+        // fade out
+        t = 1f;
+        while (t > 0f)
+        {
+            t -= Time.deltaTime * 2f;
+            roundText.alpha = t;
+            roundText2.alpha = t;
+            yield return null;
+        }
+
+        roundText.gameObject.SetActive(false);
+        roundText2.gameObject.SetActive(false);
+    }
+
+    public int currentPowerUpRoll = 0;
     public void PowerUp(int roll)
     {
+        _audioSource.Play();
+        currentPowerUpRoll = roll;
         Animator anim = powerUpSquare.GetComponent<Animator>();
         anim.SetInteger("Roll", roll);
-        //stop on the last frame of anim
+        //when last frame reached after 2.5 seconds, give player the powerup effect
+        Invoke("PowerUpAllowed", 2.5f);
+    }
+
+    public void PowerUpAllowed()
+    {
+        playerShooting.roll = currentPowerUpRoll;
+        Debug.Log("Powerup " + currentPowerUpRoll + " applied to player.");
+        Invoke("ResetPowerUp", 10f);
+    }
+
+    public void ResetPowerUp()
+    {
+        Animator anim = powerUpSquare.GetComponent<Animator>();
+        anim.SetInteger("Roll", 0);
+        currentPowerUpRoll = 0;
+        playerShooting.roll = 0;
+        Debug.Log("Powerup removed from player.");
     }
 
     void PauseGame()
@@ -106,6 +178,12 @@ public class GameUI : MonoBehaviour
                 ammoUIElements[i].SetActive(false);
             }
         }
+    }
+
+    void UpdateScoreUI()
+    {
+        scoreText.text = "Score: " + rm.score.ToString();
+        scoreText2.text = "Score: " + rm.score.ToString();
     }
 
     public void OnSaveGameButtonPressed()

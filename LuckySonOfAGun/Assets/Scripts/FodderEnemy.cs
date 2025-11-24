@@ -1,16 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
-public class FodderEnemy : MonoBehaviour
+public class FodderEnemy : Enemy
 {
     public GameObject player;
-    public float speed = 10f;
     public Health playerHealth;
 
     Rigidbody2D rb;
 
+
     void Start()
     {
+        playerHealth = GameObject.FindFirstObjectByType<Health>();
+        scoreValue = 10;
         player = GameObject.FindWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
     }

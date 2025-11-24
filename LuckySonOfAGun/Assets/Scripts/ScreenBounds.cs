@@ -25,6 +25,8 @@ public class ScreenBounds : MonoBehaviour
         GameObject border = new GameObject(name);
         border.transform.parent = transform;
         border.transform.localPosition = position;
+        //set border layermask to screenbounds
+        border.layer = LayerMask.NameToLayer("ScreenBounds");
 
         BoxCollider2D collider = border.AddComponent<BoxCollider2D>();
         collider.size = size;
@@ -34,5 +36,8 @@ public class ScreenBounds : MonoBehaviour
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
         rb.mass = 1000000000000f;
+
+        //ignore enemies
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("ScreenBounds"), true);
     }
 }

@@ -27,12 +27,16 @@ public class TitleMenu : MonoBehaviour
 
     bool isTransitioning = false;
 
+    private AudioSource _audioSource;
+
 
     void Start()
     {
         // Create arrays for easy management
         initialItems = new GameObject[] { playButton, optionsButton, exitButton };
         playPressedItems = new GameObject[] { newGameButton, loadButton, backButton };
+
+        _audioSource = GetComponent<AudioSource>();
 
         // Initialize title menu
         ShowItems(initialItems, true);
@@ -41,6 +45,9 @@ public class TitleMenu : MonoBehaviour
 
     public void onPlayButtonClicked()
     {
+        _audioSource.Play();
+
+
         if (isTransitioning) return;
 
         // Hide initial UI elements
@@ -52,6 +59,8 @@ public class TitleMenu : MonoBehaviour
 
     public void onBackButtonClicked()
     {
+
+        _audioSource.Play();
         if (isTransitioning) return;
 
         // Show initial UI elements
@@ -129,11 +138,15 @@ public class TitleMenu : MonoBehaviour
 
     public void onOptionsButtonClicked()
     {
+
+        _audioSource.Play();
         StartCoroutine(LoadLevel(3));
     }
 
     public void onNewGameButtonClicked()
     {
+
+        _audioSource.Play();
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
@@ -149,17 +162,20 @@ public class TitleMenu : MonoBehaviour
 
     public void onRestartGameButtonClicked()
     {
+        _audioSource.Play();
         StartCoroutine(LoadLevel(0));
     }
 
     public void onLoadGameButtonClicked()
     {
+        _audioSource.Play();
         // Load game logic here
         Debug.Log("Load Game button clicked");
     }
 
     public void onExitButtonClicked()
     {
+        _audioSource.Play();
         // Exit the application
         Application.Quit();
     }

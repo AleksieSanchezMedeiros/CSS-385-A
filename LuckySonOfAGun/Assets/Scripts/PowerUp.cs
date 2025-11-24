@@ -4,6 +4,12 @@ public class PowerUp : MonoBehaviour
 {
     public GameUI gui;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        gui = GameObject.FindFirstObjectByType<GameUI>();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

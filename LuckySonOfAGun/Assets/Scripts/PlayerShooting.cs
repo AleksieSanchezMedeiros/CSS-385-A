@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
+    public GameObject[] prefabBullets = new GameObject[2];
+
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletSpeed = 20f;
@@ -17,7 +19,25 @@ public class PlayerShooting : MonoBehaviour
 
     public int roll = 0;
 
+    public Health health;
+
+    private AudioSource _audioSource;
+
+    //6 powerups:
+    //1: poop gun - shoots poop that deal less damage but apply a slowing effect on enemies
+    //2: plus dmg plus speed - increases bullet damage and speed and decreases cooldown
+    //3: homing bullets - bullets home in on nearest enemy
+    //4: heal - heal up a bit of health, shot gun - shoots 3 bullets in a spread
+    //5: splitting bullets - bullets split into 2 smaller bullets on impact
+    //6: explosive bullets - bullets explode on impact dealing area damage
+
     // Update is called once per frame
+
+    void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     void Update()
     {
         if (Time.timeScale == 0f)
@@ -70,9 +90,59 @@ public class PlayerShooting : MonoBehaviour
 
     private void Shoot()
     {
-        // instantiate a bullet prefab at the player's position and make it move
-        GameObject currBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        currBullet.GetComponent<Rigidbody2D>().linearVelocity = firePoint.up * bulletSpeed;
+        _audioSource.Play();
+        int numBullets = 1;
+        switch (roll)
+        {
+            case 1:
+                //poop gun
+                //change bullet prefab to poop bullet
+                bulletPrefab = prefabBullets[0];
+                break;
+            case 2:
+                //plus dmg plus speed
+                bulletSpeed = 30f;
+                shootCooldown = 0.3f;
+                break;
+            case 4:
+                //heal
+                //heal the player for 1 health
+                health.healDamage(1);
+                Debug.Log("Player healed for 1 health.");
+                //shot gun
+                numBullets = 4;
+                break;
+            case 0:
+                //normal bullet
+                bulletSpeed = 20f;
+                shootCooldown = 0.5f;
+                bulletPrefab = prefabBullets[1];
+                break;
+            default:
+                //normal bullet
+                bulletSpeed = 20f;
+                shootCooldown = 0.5f;
+                bulletPrefab = prefabBullets[1];
+                break;
+        }
+
+        float spreadAngle = 15f;
+
+        for (int i = 0; i < numBullets; i++)
+        {
+            Quaternion bulletRot = firePoint.rotation;
+
+            if (i != 0)
+            {
+                float randomSpread = Random.Range(-spreadAngle, spreadAngle);
+                bulletRot = Quaternion.Euler(0, 0, randomSpread) * firePoint.rotation;
+            }
+
+            GameObject currBullet = Instantiate(bulletPrefab, firePoint.position, bulletRot);
+            currBullet.GetComponent<Rigidbody2D>().linearVelocity = currBullet.transform.up * bulletSpeed;
+            currBullet.GetComponent<Bullet>().SetRoll(roll);
+            Debug.Log("Player shot a bullet with powerup roll " + roll);
+        }
     }
 
     private void Reload()

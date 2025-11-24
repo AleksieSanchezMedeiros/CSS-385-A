@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class ShooterEnemy : MonoBehaviour
+public class ShooterEnemy : Enemy
 {
     public GameObject player;
-    public float speed = 3f;
 
     public float stopDistance = 10f;
     public float bulletSpeed = 15f;
@@ -25,6 +24,7 @@ public class ShooterEnemy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        scoreValue = 15;
         StartCoroutine("shootCooldown");
         rb = GetComponent<Rigidbody2D>();
     }
