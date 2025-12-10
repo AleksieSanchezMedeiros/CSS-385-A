@@ -21,6 +21,11 @@ public class ShooterEnemy : Enemy
     public Transform shootPoint;
     public Transform shootPoint2;
 
+    void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

@@ -1,6 +1,7 @@
 # CSS 385 A Au 25: Introduction To Game Development
 ---
-# Program 4: Media Integration
+# Program 5: 80% Completed Game
 # Lucky Son of A Gun
 ---
-The fade into black and fade from black is a video
+Contributors:
+Aleksie Sanchez

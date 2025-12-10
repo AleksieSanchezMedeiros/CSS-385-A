@@ -95,20 +95,19 @@ public class PlayerShooting : MonoBehaviour
         switch (roll)
         {
             case 1:
-                //poop gun
-                //change bullet prefab to poop bullet
-                bulletPrefab = prefabBullets[0];
+                //heal gun
+                //change bullet prefab to reg bullet
+                health.healDamage(1);
+                bulletPrefab = prefabBullets[1];
                 break;
             case 2:
                 //plus dmg plus speed
                 bulletSpeed = 30f;
-                shootCooldown = 0.3f;
+                shootCooldown = 0.1f;
                 break;
             case 4:
                 //heal
-                //heal the player for 1 health
-                health.healDamage(1);
-                Debug.Log("Player healed for 1 health.");
+                //heal the player for 1 health;
                 //shot gun
                 numBullets = 4;
                 break;

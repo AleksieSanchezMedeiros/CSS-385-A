@@ -48,6 +48,12 @@ public class Bullet : MonoBehaviour
     //simple delete on collision
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            return;
+        }
+
+
         switch (currentPowerUpRoll)
         {
             case 5:
@@ -90,19 +96,21 @@ public class Bullet : MonoBehaviour
                 break;
         }
 
-        if (currentPowerUpRoll == 1)
-        {
-            other.gameObject.GetComponent<Enemy>().SlowDown();
-            Destroy(gameObject);  // destroy bullet
-            return;               // DO NOT kill enemy or score
-        }
-
         // to avoid killing other bullets or player
         if (other.gameObject.CompareTag(targetTag))
         {
-            rm.score += other.gameObject.GetComponent<Enemy>().scoreValue;
-            Destroy(other.gameObject);
-            Destroy(gameObject);
+            if (other.gameObject.CompareTag("Player"))
+            {
+                Health pHP = FindFirstObjectByType<Health>();
+                pHP.takeDamage(1);
+                Destroy(gameObject);
+            }
+            else
+            {
+                rm.score += other.gameObject.GetComponent<Enemy>().scoreValue;
+                Destroy(other.gameObject);
+                Destroy(gameObject);
+            }
         }
 
         if (other.gameObject.CompareTag("Player"))
